@@ -1,6 +1,5 @@
 'use strict';
 
-// exports.ConversionError = class ConversionError extends Error {
 export class ConversionError extends Error {
     constructor(name, type, err) {
 
@@ -25,7 +24,6 @@ export class ConversionError extends Error {
     }
 };
 
-// exports.DirNotFoundError = class DirNotFoundError extends Error {
 export class DirNotFoundError extends Error {
     constructor() {
 
@@ -38,7 +36,6 @@ export class DirNotFoundError extends Error {
     }
 };
 
-// exports.FileNotFoundError = class FileNotFoundError extends Error {
 export class FileNotFoundError extends Error {
     constructor() {
 
@@ -51,7 +48,6 @@ export class FileNotFoundError extends Error {
     }
 };
 
-// exports.InvalidTypeError = class InvalidTypeError extends Error {
 export class InvalidTypeError extends Error {
     constructor(type) {
 
@@ -64,7 +60,6 @@ export class InvalidTypeError extends Error {
     }
 };
 
-// exports.UnsetEnvVarError = class UnsetEnvVarError extends Error {
 export class UnsetEnvVarError extends Error {
     constructor(name) {
 
@@ -77,7 +72,6 @@ export class UnsetEnvVarError extends Error {
     }
 };
 
-// exports.MissingPropertyError = class MissingPropertyError extends Error {
 export class MissingPropertyError extends Error {
     constructor(name) {
 

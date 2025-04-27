@@ -1,13 +1,9 @@
 'use strict';
 
-// const Fs = require('fs');
 import * as Fs from "fs";
-// const Path = require('path');
 import * as Path from "path";
 
-// const Errors = require('./errors');
 import * as Errors from './errors.js';
-// const Types = require('./types');
 import * as Types from './types.js';
 
 const internals = {};
@@ -273,6 +269,4 @@ export default function init() {
     return config.result;
 };
 
-
 // module.exports = internals.init();
-// export internals.init();

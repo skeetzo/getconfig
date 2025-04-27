@@ -1,9 +1,7 @@
 'use strict';
 
-// const Errors = require('./errors');
 import * as Errors  from "./errors.js";
 
-// exports.array = (val, type, ...args) => {
 export function array(val, type, ...args) {
 
     const result = val.split(',');
@@ -22,7 +20,6 @@ export function array(val, type, ...args) {
     });
 };
 
-// exports.boolean = (val) => {
 export function boolean(val) {
 
     if (['y', 'yes', 'true', 't', 'on'].includes(val.toLowerCase())) {
@@ -41,7 +38,6 @@ export function boolean(val) {
     throw new Errors.ConversionError();
 };
 
-// exports.date = (val) => {
 export function date(val) {
 
     let result;
@@ -60,7 +56,6 @@ export function date(val) {
     return result;
 };
 
-// exports.number = (val) => {
 export function number(val) {
 
     const result = Number(val);
@@ -71,7 +66,6 @@ export function number(val) {
     return result;
 };
 
-// exports.object = (val) => {
 export function object(val) {
 
     try {
@@ -82,7 +76,6 @@ export function object(val) {
     }
 };
 
-// exports.regex = (val) => {
 export function regex(val) {
 
     try {
