@@ -1,8 +1,10 @@
 'use strict';
 
-const Errors = require('./errors');
+// const Errors = require('./errors');
+import * as Errors  from "./errors.js";
 
-exports.array = (val, type, ...args) => {
+// exports.array = (val, type, ...args) => {
+export function array(val, type, ...args) {
 
     const result = val.split(',');
 
@@ -20,7 +22,8 @@ exports.array = (val, type, ...args) => {
     });
 };
 
-exports.boolean = (val) => {
+// exports.boolean = (val) => {
+export function boolean(val) {
 
     if (['y', 'yes', 'true', 't', 'on'].includes(val.toLowerCase())) {
         return true;
@@ -38,7 +41,8 @@ exports.boolean = (val) => {
     throw new Errors.ConversionError();
 };
 
-exports.date = (val) => {
+// exports.date = (val) => {
+export function date(val) {
 
     let result;
     const num = Number(val);
@@ -56,7 +60,8 @@ exports.date = (val) => {
     return result;
 };
 
-exports.number = (val) => {
+// exports.number = (val) => {
+export function number(val) {
 
     const result = Number(val);
     if (isNaN(result)) {
@@ -66,7 +71,8 @@ exports.number = (val) => {
     return result;
 };
 
-exports.object = (val) => {
+// exports.object = (val) => {
+export function object(val) {
 
     try {
         return JSON.parse(val);
@@ -76,7 +82,8 @@ exports.object = (val) => {
     }
 };
 
-exports.regex = (val) => {
+// exports.regex = (val) => {
+export function regex(val) {
 
     try {
         return new RegExp(val);

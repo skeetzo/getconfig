@@ -24,5 +24,6 @@
   },
   "scripts": {
     "test": "lab -a code -L"
-  }
+  },
+  "type":"module"
 }

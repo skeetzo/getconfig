@@ -1,6 +1,7 @@
 'use strict';
 
-exports.ConversionError = class ConversionError extends Error {
+// exports.ConversionError = class ConversionError extends Error {
+export class ConversionError extends Error {
     constructor(name, type, err) {
 
         let message = 'Unable to convert environment variable';
@@ -24,7 +25,8 @@ exports.ConversionError = class ConversionError extends Error {
     }
 };
 
-exports.DirNotFoundError = class DirNotFoundError extends Error {
+// exports.DirNotFoundError = class DirNotFoundError extends Error {
+export class DirNotFoundError extends Error {
     constructor() {
 
         super('Unable to find a config directory');
@@ -36,7 +38,8 @@ exports.DirNotFoundError = class DirNotFoundError extends Error {
     }
 };
 
-exports.FileNotFoundError = class FileNotFoundError extends Error {
+// exports.FileNotFoundError = class FileNotFoundError extends Error {
+export class FileNotFoundError extends Error {
     constructor() {
 
         super('No config files found');
@@ -48,7 +51,8 @@ exports.FileNotFoundError = class FileNotFoundError extends Error {
     }
 };
 
-exports.InvalidTypeError = class InvalidTypeError extends Error {
+// exports.InvalidTypeError = class InvalidTypeError extends Error {
+export class InvalidTypeError extends Error {
     constructor(type) {
 
         super(`Invalid type specified: ${type}`);
@@ -60,7 +64,8 @@ exports.InvalidTypeError = class InvalidTypeError extends Error {
     }
 };
 
-exports.UnsetEnvVarError = class UnsetEnvVarError extends Error {
+// exports.UnsetEnvVarError = class UnsetEnvVarError extends Error {
+export class UnsetEnvVarError extends Error {
     constructor(name) {
 
         super(`Unable to resolve environment variable $${name}`);
@@ -72,7 +77,8 @@ exports.UnsetEnvVarError = class UnsetEnvVarError extends Error {
     }
 };
 
-exports.MissingPropertyError = class MissingPropertyError extends Error {
+// exports.MissingPropertyError = class MissingPropertyError extends Error {
+export class MissingPropertyError extends Error {
     constructor(name) {
 
         super(`The requested property ${name} is not set`);

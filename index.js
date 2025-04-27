@@ -1,10 +1,14 @@
 'use strict';
 
-const Fs = require('fs');
-const Path = require('path');
+// const Fs = require('fs');
+import * as Fs from "fs";
+// const Path = require('path');
+import * as Path from "path";
 
-const Errors = require('./errors');
-const Types = require('./types');
+// const Errors = require('./errors');
+import * as Errors from './errors.js';
+// const Types = require('./types');
+import * as Types from './types.js';
 
 const internals = {};
 
@@ -231,7 +235,8 @@ internals.primeEnv = function (root) {
 };
 
 
-internals.init = function () {
+// internals.init = function () {
+export default function init() {
 
     const override = process.env.CODE_LOCATION ?
         Path.join(process.env.CODE_LOCATION, 'config') :
@@ -269,4 +274,5 @@ internals.init = function () {
 };
 
 
-module.exports = internals.init();
+// module.exports = internals.init();
+// export internals.init();
