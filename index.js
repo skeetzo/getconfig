@@ -231,8 +231,8 @@ internals.primeEnv = function (root) {
 };
 
 
-// internals.init = function () {
-export default function init() {
+internals.init = function () {
+// export default function init() {
 
     const override = process.env.CODE_LOCATION ?
         Path.join(process.env.CODE_LOCATION, 'config') :
@@ -268,5 +268,6 @@ export default function init() {
 
     return config.result;
 };
+export default internals.init;
 
 // module.exports = internals.init();
