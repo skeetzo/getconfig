@@ -146,7 +146,7 @@ internals.isDir = function (path) {
 };
 
 
-internals.require = function (root, env) {
+internals.require = async function (root, env) {
 
     let path = Path.join(root, env);
     if (root === './') {
@@ -155,7 +155,9 @@ internals.require = function (root, env) {
 
     const result = {};
     try {
-        result.value = require(path);
+        // result.value = require(path);
+        const module = await import(path);
+        result.value = module
     }
     catch (err) {
         if (err.code === 'MODULE_NOT_FOUND') {
@@ -190,9 +192,10 @@ internals.findConfig = function (root) {
         return locate(root);
     }
 
-    if (require.main) {
+    // if (require.main) {
+    if (process.argv[1] === new URL(import.meta.url).pathname) {
         try {
-            return locate(Path.dirname(require.main.filename));
+            return locate(Path.dirname(new URL(import.meta.url).pathname));
         }
         catch (err) {
             return locate(process.cwd());
@@ -246,9 +249,9 @@ internals.init = function () {
     const devEnvirons = ['dev', 'devel', 'develop', 'development'];
     const currentEnv = isDev ? devEnvirons : [process.env.NODE_ENV];
 
-    const config = ['default', 'all', ...currentEnv, 'local'].reduce((acc, env) => {
+    const config = ['default', 'all', ...currentEnv, 'local'].reduce(async (acc, env) => {
 
-        const cfg = internals.require(root, env);
+        const cfg = await internals.require(root, env);
         if (!cfg.notfound) {
             if (!['default', 'all', 'local'].includes(env)) {
                 acc.result.getconfig.env = env;
