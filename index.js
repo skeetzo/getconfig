@@ -156,15 +156,18 @@ internals.require = async function (root, env) {
     const result = {};
     try {
         // result.value = require(path);
-        const module = await import(path);
-        result.value = module
+        console.log(path)
+        const { config } = await import(path+".js");
+        console.log(config)
+        result.value = config
     }
     catch (err) {
-        if (err.code === 'MODULE_NOT_FOUND') {
+        if (err.code === 'MODULE_NOT_FOUND' || err.code === 'ERR_MODULE_NOT_FOUND') {
             result.notfound = true;
         }
         else {
-            throw err;
+            result.notfound = true;
+            // throw err;
         }
     }
 
@@ -173,9 +176,7 @@ internals.require = async function (root, env) {
 
 
 internals.findConfig = function (root) {
-
     const locate = function (start) {
-
         const path = Path.join(start, 'config');
         if (internals.isDir(path)) {
             return path;
@@ -234,7 +235,7 @@ internals.primeEnv = function (root) {
 };
 
 
-internals.init = function () {
+internals.init = async function () {
 // export default function init() {
 
     const override = process.env.CODE_LOCATION ?
@@ -249,7 +250,7 @@ internals.init = function () {
     const devEnvirons = ['dev', 'devel', 'develop', 'development'];
     const currentEnv = isDev ? devEnvirons : [process.env.NODE_ENV];
 
-    const config = ['default', 'all', ...currentEnv, 'local'].reduce(async (acc, env) => {
+    const config = await ['default', 'all', ...currentEnv, 'local'].reduce(async function(acc, env) {
 
         const cfg = await internals.require(root, env);
         if (!cfg.notfound) {
@@ -262,7 +263,7 @@ internals.init = function () {
 
         return acc;
     }, { result: { getconfig: { env: process.env.NODE_ENV || 'dev', isDev: isDev || devEnvirons.includes(process.env.NODE_ENV) } }, found: false });
-
+    console.log(config)
     if (!config.found) {
         throw new Errors.FileNotFoundError();
     }
@@ -271,6 +272,5 @@ internals.init = function () {
 
     return config.result;
 };
-export default internals.init;
-
+export default internals.init();
 // module.exports = internals.init();
