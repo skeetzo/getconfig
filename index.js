@@ -244,6 +244,7 @@ internals.init = function () {
             process.env.GETCONFIG_ROOT);
 
     const root = override ? Path.resolve(process.cwd(), override) : internals.findConfig();
+    console.log(root)
     internals.primeEnv(root);
     const isDev = !process.env.hasOwnProperty('NODE_ENV');
     const devEnvirons = ['dev', 'devel', 'develop', 'development'];
