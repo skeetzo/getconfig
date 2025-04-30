@@ -274,5 +274,5 @@ internals.init = async function () {
 
     return config.result;
 };
-export default internals.init();
+export default await internals.init();
 // module.exports = internals.init();
