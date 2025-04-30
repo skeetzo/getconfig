@@ -156,12 +156,13 @@ internals.require = async function (root, env) {
     const result = {};
     try {
         // result.value = require(path);
-        console.log(path)
+        // console.log(path+".js")
         const { config } = await import(path+".js");
-        console.log(config)
+        // console.log(config)
         result.value = config
     }
     catch (err) {
+        // console.error(err)
         if (err.code === 'MODULE_NOT_FOUND' || err.code === 'ERR_MODULE_NOT_FOUND') {
             result.notfound = true;
         }
@@ -253,6 +254,7 @@ internals.init = async function () {
     const config = await ['default', 'all', ...currentEnv, 'local'].reduce(async function(acc, env) {
 
         const cfg = await internals.require(root, env);
+        // console.log(cfg)
         if (!cfg.notfound) {
             if (!['default', 'all', 'local'].includes(env)) {
                 acc.result.getconfig.env = env;
@@ -263,7 +265,7 @@ internals.init = async function () {
 
         return acc;
     }, { result: { getconfig: { env: process.env.NODE_ENV || 'dev', isDev: isDev || devEnvirons.includes(process.env.NODE_ENV) } }, found: false });
-    console.log(config)
+    // console.log(config)
     if (!config.found) {
         throw new Errors.FileNotFoundError();
     }
