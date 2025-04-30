@@ -157,7 +157,7 @@ internals.require = async function (root, env) {
     try {
         // result.value = require(path);
         // console.log(path+".js")
-        const { config } = await import(path+".mjs");
+        const { config } = await import(path);
         // console.log(config)
         result.value = config
     }
