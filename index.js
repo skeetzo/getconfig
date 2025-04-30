@@ -157,7 +157,7 @@ internals.require = async function (root, env) {
     try {
         // result.value = require(path);
         // console.log(path+".js")
-        const { config } = await import(path+".js");
+        const { config } = await import(path+".mjs");
         // console.log(config)
         result.value = config
     }
@@ -237,8 +237,6 @@ internals.primeEnv = function (root) {
 
 
 internals.init = async function () {
-// export default function init() {
-
     const override = process.env.CODE_LOCATION ?
         Path.join(process.env.CODE_LOCATION, 'config') :
         (process.env.LAMBDA_TASK_ROOT ?
@@ -253,9 +251,9 @@ internals.init = async function () {
 
     const config = await ['default', 'all', ...currentEnv, 'local'].reduce(async (accP, env) => {
         const acc = await accP;
-        // console.log(acc)
+        console.log(acc)
         const cfg = await internals.require(root, env);
-        // console.log(cfg)
+        console.log(cfg)
         if (!cfg.notfound) {
             if (!['default', 'all', 'local'].includes(env)) {
                 acc.result.getconfig.env = env;
@@ -263,10 +261,10 @@ internals.init = async function () {
             acc.found = true;
             internals.merge(acc.result, internals.processEnv(cfg.value));
         }
-        // console.log(acc)
+        console.log(acc)
         return acc;
     }, { result: { getconfig: { env: process.env.NODE_ENV || 'dev', isDev: isDev || devEnvirons.includes(process.env.NODE_ENV) } }, found: false });
-    // console.log(config)
+    console.log(config)
     if (!config.found) {
         throw new Errors.FileNotFoundError();
     }
