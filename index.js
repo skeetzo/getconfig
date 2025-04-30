@@ -155,20 +155,15 @@ internals.require = async function (root, env) {
 
     const result = {};
     try {
-        // result.value = require(path);
-        // console.log(path+".js")
-        const { config } = await import(path);
-        // console.log(config)
+        const { config } = await import(path+".mjs");
         result.value = config
     }
     catch (err) {
-        // console.error(err)
         if (err.code === 'MODULE_NOT_FOUND' || err.code === 'ERR_MODULE_NOT_FOUND') {
             result.notfound = true;
         }
         else {
-            result.notfound = true;
-            // throw err;
+            throw err;
         }
     }
 
@@ -194,7 +189,6 @@ internals.findConfig = function (root) {
         return locate(root);
     }
 
-    // if (require.main) {
     if (process.argv[1] === new URL(import.meta.url).pathname) {
         try {
             return locate(Path.dirname(new URL(import.meta.url).pathname));
@@ -251,9 +245,7 @@ internals.init = async function () {
 
     const config = await ['default', 'all', ...currentEnv, 'local'].reduce(async (accP, env) => {
         const acc = await accP;
-        // console.log(acc)
         const cfg = await internals.require(root, env);
-        // console.log(cfg)
         if (!cfg.notfound) {
             if (!['default', 'all', 'local'].includes(env)) {
                 acc.result.getconfig.env = env;
@@ -261,18 +253,14 @@ internals.init = async function () {
             acc.found = true;
             internals.merge(acc.result, internals.processEnv(cfg.value));
         }
-        // console.log(acc)
         return acc;
     }, { result: { getconfig: { env: process.env.NODE_ENV || 'dev', isDev: isDev || devEnvirons.includes(process.env.NODE_ENV) } }, found: false });
-    // console.log(config)
     if (!config.found) {
         throw new Errors.FileNotFoundError();
     }
 
     internals.processRefs(config.result, config.result);
 
-    // console.log(config)
     return config.result;
 };
 export default await internals.init();
-// module.exports = internals.init();
