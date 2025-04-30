@@ -251,8 +251,9 @@ internals.init = async function () {
     const devEnvirons = ['dev', 'devel', 'develop', 'development'];
     const currentEnv = isDev ? devEnvirons : [process.env.NODE_ENV];
 
-    const config = await ['default', 'all', ...currentEnv, 'local'].reduce(async function(acc, env) {
-
+    const config = await ['default', 'all', ...currentEnv, 'local'].reduce(async (accP, env) => {
+        const acc = await accP;
+        // console.log(acc)
         const cfg = await internals.require(root, env);
         // console.log(cfg)
         if (!cfg.notfound) {
@@ -262,7 +263,7 @@ internals.init = async function () {
             acc.found = true;
             internals.merge(acc.result, internals.processEnv(cfg.value));
         }
-
+        // console.log(acc)
         return acc;
     }, { result: { getconfig: { env: process.env.NODE_ENV || 'dev', isDev: isDev || devEnvirons.includes(process.env.NODE_ENV) } }, found: false });
     // console.log(config)
@@ -272,6 +273,7 @@ internals.init = async function () {
 
     internals.processRefs(config.result, config.result);
 
+    // console.log(config)
     return config.result;
 };
 export default await internals.init();
